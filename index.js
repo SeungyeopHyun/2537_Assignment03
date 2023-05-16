@@ -7,12 +7,11 @@ let selectedTypes = {};
 const updatePaginationDiv = (currentPage, numPages) => {
   $("#pagination").empty();
 
-  let startPage = Math.max(currentPage - 1, 1);
-  let endPage = Math.min(startPage + 2, numPages);
-  if (endPage - startPage < 2) {
-    // adjust startPage and endPage if we have less than 3 pages to show
-    endPage = Math.min(startPage + 2, numPages);
-    startPage = Math.max(endPage - 2, 1);
+  let startPage = Math.max(currentPage - 2, 1);
+  let endPage = Math.min(startPage + 4, numPages);
+  if (endPage - startPage < 4) {
+    endPage = Math.min(startPage + 4, numPages);
+    startPage = Math.max(endPage - 4, 1);
   }
 
   if (currentPage > 1) {
@@ -94,7 +93,6 @@ const paginate = async (currentPage, PAGE_SIZE, pokemons) => {
 };
 
 const setup = async () => {
-  // test out poke api using axios here
 
   $("#pokeCards").empty();
   let response = await axios.get(
@@ -109,7 +107,6 @@ const setup = async () => {
 
   $("body").on("click", ".pokeCard", async function (e) {
     const pokemonName = $(this).attr("pokeName");
-    // console.log("pokemonName: ", pokemonName);
     const res = await axios.get(
       `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
     );
